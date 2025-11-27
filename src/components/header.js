@@ -1,157 +1,283 @@
-"use client"
-import React, { useState } from 'react'
+"use client";
 
-const Header = () => {
+import React, { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+
+export default function Header() {
     const [open, setOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
+    const firstLinkRef = useRef(null);
+    const pathname = usePathname();
+    const HEADER_HEIGHT = 96;
 
     const items = [
-        { href: "/", label: "Welcome", current: true },
+        { href: "/", label: "Welcome" },
         { href: "/about", label: "About" },
         { href: "/books", label: "Books" },
-        { href: "/faq", label: "FAQ" },
         { href: "/blog", label: "Blog" },
         { href: "/contact", label: "Contact" },
     ];
+
+    const isCurrentPath = (href) => {
+        if (!mounted) return false;
+        if (href === "/") return pathname === "/";
+        return pathname.startsWith(href);
+    };
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    useEffect(() => {
+        document.body.style.overflow = open ? "hidden" : "";
+        if (open) {
+            requestAnimationFrame(() => firstLinkRef.current?.focus());
+        }
+        const onKey = (e) => {
+            if (e.key === "Escape") setOpen(false);
+        };
+        window.addEventListener("keydown", onKey);
+        return () => {
+            window.removeEventListener("keydown", onKey);
+            document.body.style.overflow = "";
+        };
+    }, [open]);
+
     return (
-        <header className="site-header w-full lg:h-[600px] h-fit" role='banner'>
-            <div className='max-w-[1040px] mx-auto h-full p-4 flex justify-center items-center flex-col relative'>
-                <nav
-                    className="hidden md:flex items-center"
-                    aria-label="Main"
-                >
-                    <ul className="flex gap-6 md:gap-8 items-center">
-                        {items.map((it) => (
-                            <li key={it.label} className="">
-                                <a
-                                    href={it.href}
-                                    itemProp="url"
-                                    className={
-                                        "relative inline-block px-2 py-1 text-sm md:text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300 " +
-                                        (it.current
-                                            ? "text-blue-50 after:absolute after:-bottom-2 after:left-0 after:right-0 after:h-0.5 after:bg-blue-300"
-                                            : "text-white/90 hover:text-white after:opacity-0 hover:after:opacity-100")
-                                    }
-                                    aria-current={it.current ? "page" : undefined}
+        <>
+            <header
+                className="w-full bg-white z-50 fixed top-0 left-0 right-0"
+                style={{ height: HEADER_HEIGHT }}
+                role="banner"
+            >
+                <div className="max-w-7xl mx-auto px-6 h-full">
+                    <div className="flex items-center justify-between h-full">
+                        <div className="flex items-center gap-6">
+                            <div
+                                aria-label="Yemi Mohammed nameplate logo"
+                                className="select-none shrink-0"
+                                style={{ width: 220 }}
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 420 140"
+                                    preserveAspectRatio="xMinYMid meet"
+                                    className="block w-full h-auto"
+                                    role="img"
+                                    aria-hidden="true"
                                 >
-                                    <span>{it.label}</span>
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
-                <div className="md:hidden w-full">
-                    <div className="flex items-center justify-center">
-                        <button
-                            onClick={() => setOpen((s) => !s)}
-                            aria-expanded={open}
-                            aria-controls="mobile-menu"
-                            className="p-2 rounded-md text-white hover:bg-white/6 focus:outline-none focus:ring-0 flex justify-center items-center"
-                        >
-                            <svg className="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                {open ? (
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                ) : (
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8h16M4 16h16" />
-                                )}
-                            </svg> MENU
-                        </button>
+                                    <text
+                                        x="10"
+                                        y="48"
+                                        textAnchor="start"
+                                        fontFamily="Cronos Pro, serif"
+                                        fontSize="48"
+                                        fontWeight="400"
+                                        fill="#111111"
+                                        stroke="#111111"
+                                        strokeWidth="2"
+                                        strokeOpacity="0.10"
+                                        paintOrder="stroke"
+                                    >
+                                        Yemi
+                                    </text>
+
+                                    <text
+                                        x="10"
+                                        y="110"
+                                        textAnchor="start"
+                                        fontFamily="Cronos Pro, serif"
+                                        fontSize="48"
+                                        fontWeight="400"
+                                        fill="#111111"
+                                        stroke="#111111"
+                                        strokeWidth="2"
+                                        strokeOpacity="0.10"
+                                        paintOrder="stroke"
+                                    >
+                                        Mohammed
+                                    </text>
+                                </svg>
+                            </div>
+
+                            <div aria-hidden className="h-14 w-px bg-gray-300" />
+
+                            <div className="hidden md:block">
+                                <div className="text-xs md:text-sm leading-tight uppercase tracking-wider text-gray-700 font-medium">
+                                    <div>The multi-million</div>
+                                    <div className="mt-1">Bestselling author</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Desktop nav */}
+                        <nav className="hidden md:flex items-center" aria-label="Main">
+                            <ul className="flex gap-8 items-center">
+                                {items.map((it) => (
+                                    <li key={it.label}>
+                                        <a
+                                            href={it.href}
+                                            itemProp="url"
+                                            className={
+                                                "relative inline-block px-2 py-1 text-sm font-medium transition-colors focus:outline-none " +
+                                                (isCurrentPath(it.href)
+                                                    ? "text-gray-900 after:absolute after:-bottom-2 after:left-0 after:right-0 after:h-0.5 after:bg-gray-900"
+                                                    : "text-gray-700 hover:text-gray-900")
+                                            }
+                                            aria-current={isCurrentPath(it.href) ? "page" : undefined}
+                                        >
+                                            <span>{it.label}</span>
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </nav>
+
+                        {/* Mobile menu button */}
+                        <div className="md:hidden">
+                            <button
+                                onClick={() => setOpen((s) => !s)}
+                                aria-expanded={open}
+                                aria-controls="mobile-drawer"
+                                className="p-2 rounded-md text-gray-900 hover:bg-gray-100 inline-flex items-center gap-2"
+                            >
+                                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+                                    {open ? (
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    ) : (
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8h16M4 16h16" />
+                                    )}
+                                </svg>
+                                <span className="uppercase text-sm tracking-wider">Menu</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            {/* spacer so page content isn't hidden under fixed header */}
+            <div style={{ height: HEADER_HEIGHT }} aria-hidden />
+
+            {/* Mobile top-drawer: make it fixed to viewport so it is fully visible */}
+            <div
+                id="mobile-drawer"
+                aria-hidden={!open}
+                className={`fixed inset-0 z-50 pointer-events-none transition-opacity duration-300 ${open ? "opacity-100" : "opacity-0"}`}
+            >
+                {/* Backdrop */}
+                <div
+                    className={`absolute inset-0 bg-black/40 transition-opacity duration-300 ${open ? "opacity-100" : "opacity-0"}`}
+                    onClick={() => setOpen(false)}
+                    aria-hidden
+                />
+
+                {/* Drawer panel (slides down) */}
+                <div
+                    className={`absolute top-0 left-0 right-0 bg-white shadow-lg transform transition-transform duration-300 ease-out ${open ? "translate-y-0" : "-translate-y-full"
+                        } pointer-events-auto`}
+                    style={{ willChange: "transform" }}
+                >
+                    <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                            <div
+                                aria-label="Yemi Mohammed nameplate logo"
+                                className="select-none shrink-0"
+                                style={{ width: 160 }}
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 420 140"
+                                    preserveAspectRatio="xMinYMid meet"
+                                    className="block w-full h-auto"
+                                    role="img"
+                                    aria-hidden="true"
+                                >
+                                    <text
+                                        x="10"
+                                        y="40"
+                                        textAnchor="start"
+                                        fontFamily="Cronos Pro, serif"
+                                        fontSize="36"
+                                        fontWeight="400"
+                                        fill="#111111"
+                                        stroke="#111111"
+                                        strokeWidth="1.5"
+                                        strokeOpacity="0.10"
+                                        paintOrder="stroke"
+                                    >
+                                        Yemi
+                                    </text>
+
+                                    <text
+                                        x="10"
+                                        y="98"
+                                        textAnchor="start"
+                                        fontFamily="Cronos Pro, serif"
+                                        fontSize="36"
+                                        fontWeight="400"
+                                        fill="#111111"
+                                        stroke="#111111"
+                                        strokeWidth="1.5"
+                                        strokeOpacity="0.10"
+                                        paintOrder="stroke"
+                                    >
+                                        Mohammed
+                                    </text>
+                                </svg>
+                            </div>
+
+                            <div className="hidden sm:block">
+                                <div className="text-xs leading-tight uppercase tracking-wider text-gray-700 font-medium">
+                                    <div>The multi-million</div>
+                                    <div className="mt-1">Bestselling author</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Close button: make it clearly visible and accessible */}
+                        <div>
+                            <button
+                                onClick={() => setOpen(false)}
+                                aria-label="Close menu"
+                                className="p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
+                                style={{ lineHeight: 0 }}
+                            >
+                                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                                    <path d="M6 18L18 6" />
+                                    <path d="M6 6L18 18" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
 
-                    <div
-                        id="mobile-menu"
-                        className={`mt-3 w-full ${open ? "block" : "hidden"}`}
-                        role="menu"
-                        aria-label="Mobile Main Navigation"
-                    >
-                        <ul className="flex flex-col items-center gap-3 py-2">
-                            {items.map((it) => (
+                    <nav aria-label="Mobile main navigation" className="max-w-7xl mx-auto px-6 pb-8">
+                        <ul className="space-y-3">
+                            {items.map((it, idx) => (
                                 <li key={it.label}>
                                     <a
+                                        ref={idx === 0 ? firstLinkRef : null}
                                         href={it.href}
-                                        className={
-                                            "block px-4 py-2 rounded-md text-base font-semibold transition-colors " +
-                                            (it.current ? "bg-white/6 text-white" : "text-white/90 hover:bg-white/4")
-                                        }
+                                        className="block w-full px-4 py-3 rounded-md text-base font-semibold text-gray-900 hover:bg-gray-50 focus:outline-none focus:bg-gray-50"
+                                        onClick={() => setOpen(false)}
                                     >
                                         {it.label}
                                     </a>
                                 </li>
                             ))}
                         </ul>
-                    </div>
-                </div>
-                <div className='w-full h-full flex justify-center flex-col items-center lg:py-0 py-30' aria-label="Yemi Muhammed nameplate link to homepage"   >
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid meet">
-                        <g transform="translate(60,80)">
-                            <circle cx="0" cy="0" r="6" fill="#2ec2b8" />
-                            <circle cx="34" cy="12" r="5" fill="#f28fb0" />
-                            <circle cx="-26" cy="22" r="4" fill="#f6c85f" />
-                            <path d="M-40 -10 L-10 -2" stroke="#3b5bb3" strokeWidth="3" />
-                            <path d="M10 26 L40 36" stroke="#3b5bb3" strokeWidth="3" />
-                            <path d="M-5 -25 L5 -40" stroke="#2ec2b8" strokeWidth="3" />
-                        </g>
 
-                        <g transform="translate(1140,80)">
-                            <circle cx="0" cy="0" r="6" fill="#f6c85f" />
-                            <circle cx="-30" cy="18" r="5" fill="#2ec2b8" />
-                            <circle cx="-46" cy="-8" r="4" fill="#f28fb0" />
-                            <path d="M-60 10 L-25 25" stroke="#3b5bb3" strokeWidth="3" />
-                            <path d="M10 -10 L40 -20" stroke="#3b5bb3" strokeWidth="3" />
-                        </g>
-
-                        <g transform="translate(260,48) scale(1.12)" className="icon">
-                            <path d="M0 0 L28 28" />
-                            <path d="M28 28 L48 8" />
-                            <path d="M48 8 L18 -22" />
-                            <circle cx="10" cy="-10" r="3" fill="#3b5bb3" stroke="none" />
-                        </g>
-
-                        <g transform="translate(980,52) scale(1.12)" className="icon">
-                            <path d="M0 0 L0 36 L35 26 L35 -14 Z" />
-                            <path d="M35 -14 L70 -4 L70 36 L35 26" />
-                            <line x1="0" y1="12" x2="35" y2="4" stroke="#3b5bb3" />
-                            <line x1="35" y1="4" x2="70" y2="12" stroke="#3b5bb3" />
-                        </g>
-
-                        <g transform="translate(620,44)">
-                            <path d="M0 -12 L4 -4 L12 -4 L6 2 L8 10 L0 6 L-8 10 L-6 2 L-12 -4 L-4 -4 Z" fill="#f6c85f" />
-                            <circle cx="30" cy="-4" r="3" fill="#f28fb0" />
-                            <circle cx="-30" cy="0" r="3" fill="#2ec2b8" />
-                            <path d="M54 6 L64 16" stroke="#3b5bb3" strokeWidth="3" />
-                            <path d="M-54 6 L-64 16" stroke="#3b5bb3" strokeWidth="3" />
-                        </g>
-
-                        <g transform="translate(600,150)">
-                            <text x="0" y="0" className="t" fontSize="170" textAnchor="middle" transform="scale(1.12,1)" fill="#f6d6d8" stroke="#ffffff" strokeWidth="6" strokeOpacity="0.14" paintOrder="stroke">
-                                Yemi
-                            </text>
-                        </g>
-                        <g transform="translate(600,310)">
-                            <text x="0" y="0" className="t" fontSize="170" textAnchor="middle" transform="scale(1.12,1)" fill="#f6d6d8" stroke="#ffffff" strokeWidth="5" strokeOpacity="0.14" paintOrder="stroke">
-                                Muhammed
-                            </text>
-                        </g>
-                        <g transform="translate(520,270)">
-                            <circle cx="0" cy="0" r="5" fill="#2ec2b8" />
-                            <circle cx="26" cy="6" r="4" fill="#f28fb0" />
-                            <circle cx="-26" cy="10" r="4" fill="#f6c85f" />
-                        </g>
-                    </svg>
-                    <div className='flex justify-center items-center space-x-5'>
-                        <a href="/" aria-label="Yemi Muhammed homepage link">
-                            <img src="/assets/icons/facebook.png" alt="" className='w-8 h-8' />
-                        </a>
-                        <a href="/" aria-label="Yemi Muhammed homepage link">
-                            <img src="/assets/icons/twitter.png" alt="" className='w-8 h-8' />
-                        </a>
-                        <a href="/" aria-label="Yemi Muhammed homepage link">
-                            <img src="/assets/icons/facebook.png" alt="" className='w-8 h-8' />
-                        </a>
-                    </div>
+                        <div className="mt-6 border-t border-gray-100 pt-6">
+                            <a
+                                href="/signup"
+                                className="inline-block px-5 py-3 border border-gray-900 text-sm font-semibold text-gray-900 hover:bg-gray-900 hover:text-white transition"
+                                onClick={() => setOpen(false)}
+                            >
+                                Sign up to the newsletter
+                            </a>
+                        </div>
+                    </nav>
                 </div>
             </div>
-        </header>
-    )
+        </>
+    );
 }
-
-export default Header

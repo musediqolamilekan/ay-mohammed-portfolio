@@ -1,25 +1,25 @@
 "use client";
-import React, { useMemo, useState } from 'react';
-import books from '../data/books';
-import BookCard from './bookCard';
 
-export default function BookGrid({ showAll = false }) {
-    const [sortBy, setSortBy] = useState('publication'); // publication | recent | popular
+import React, { useMemo, useState, useEffect } from "react";
+import BookCard from "./bookCard";
+export default function BookGrid({ books = [], showAll = false }) {
+    const [sortBy, setSortBy] = useState("publication");
+    useEffect(() => {
+    }, [books]);
 
     const sorted = useMemo(() => {
         const clone = [...books];
-        if (sortBy === 'publication') {
-            // assume seq indicates publication order for this dataset
+        if (sortBy === "publication") {
             return clone.sort((a, b) => (a.seq ?? 0) - (b.seq ?? 0));
         }
-        if (sortBy === 'recent') {
+        if (sortBy === "recent") {
             return clone.sort((a, b) => new Date(b.publishedDate) - new Date(a.publishedDate));
         }
-        if (sortBy === 'popular') {
+        if (sortBy === "popular") {
             return clone.sort((a, b) => (b.popularity ?? 0) - (a.popularity ?? 0));
         }
         return clone;
-    }, [sortBy]);
+    }, [books, sortBy]);
 
     const visible = showAll ? sorted : sorted.slice(0, 4);
 
@@ -28,7 +28,7 @@ export default function BookGrid({ showAll = false }) {
             <div className="max-w-7xl mx-auto px-6">
                 <header className="flex items-start justify-between mb-8 lg:flex-row flex-col gap-6">
                     <div>
-                        <h2 className="text-3xl font-serif tracking-wide">A.Y. Muhammed Series</h2>
+                        <h2 className="text-3xl font-serif tracking-wide">A.Y. Mohammed Series</h2>
                         <p className="text-sm text-gray-600 mt-2 max-w-xl">
                             International bestsellers — atmospheric mysteries rooted in Nigeria, driven by place, memory and slow-burning suspense.
                         </p>
@@ -67,13 +67,16 @@ export default function BookGrid({ showAll = false }) {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-8">
                     {visible.map((b, index) => (
-                        <BookCard key={b.id}
-      book={b}
-      data-aos="fade-up"
-      data-aos-delay={index * 100}
-      data-aos-duration="700"/>
+                        <BookCard
+                            key={b._id ?? b.id}
+                            book={b}
+                            data-aos="fade-up"
+                            data-aos-delay={index * 100}
+                            data-aos-duration="700"
+                        />
                     ))}
                 </div>
+
                 {!showAll && (
                     <div className="mt-8 flex justify-center">
                         <a
@@ -84,7 +87,6 @@ export default function BookGrid({ showAll = false }) {
                         </a>
                     </div>
                 )}
-
             </div>
         </section>
     );
