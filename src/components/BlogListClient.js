@@ -91,7 +91,7 @@ export default function BlogListClient({ initialPage = 1, pageSize = 6 }) {
                                 <div className="w-8 h-8 rounded-full bg-[#01a2bb]/20 flex items-center justify-center text-sm font-medium text-[#01a2bb]">
                                     YM
                                 </div>
-                                <div className="text-sm text-gray-600">Yemi Mohammed</div>
+                                <div className="text-sm text-gray-600">A.Y. Mohammed</div>
                             </div>
                         </div>
                         <div className="lg:col-span-4 flex justify-end">

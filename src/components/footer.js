@@ -10,13 +10,13 @@ export default function Footer() {
                             </div>
 
                             <div className='flex justify-center items-center space-x-5'>
-                                <a href="/" aria-label="Yemi Mohammed homepage link">
+                                <a href="/" aria-label="A.Y. Mohammed homepage link">
                                     <img src="/assets/icons/facebook.png" alt="" className='w-8 h-8' />
                                 </a>
-                                <a href="/" aria-label="Yemi Mohammed homepage link">
+                                <a href="/" aria-label="A.Y. Mohammed homepage link">
                                     <img src="/assets/icons/twitter.png" alt="" className='w-8 h-8' />
                                 </a>
-                                <a href="/" aria-label="Yemi Mohammed homepage link">
+                                <a href="/" aria-label="A.Y. Mohammed homepage link">
                                     <img src="/assets/icons/facebook.png" alt="" className='w-8 h-8' />
                                 </a>
                             </div>

@@ -2,10 +2,10 @@ export default function AboutMe() {
     return (
         <section className="w-full py-20">
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                <div className="w-full aspect-auto md:aspect-auto overflow-hidden rounded-md" aria-label="Portrait of Yemi Mohammed">
+                <div className="w-full aspect-auto md:aspect-auto overflow-hidden rounded-md" aria-label="Portrait of A.Y. Mohammed">
                     <img
                         src="/assets/aboutMe.jpg"
-                        alt="Yemi Mohammed portrait"
+                        alt="A.Y. Mohammed portrait"
                         data-aos="fade-right"
                         data-aos-duration="1000"
                         className="w-full h-full object-cover"
@@ -13,10 +13,10 @@ export default function AboutMe() {
                     />
                 </div>
 
-                <div data-aos="fade-left" data-aos-duration="1000" className="text-gray-200 px-5 lg:px-0 leading-relaxed text-[15.5px] md:text-[16px] space-y-6 my-auto" aria-label="About Yemi Mohammed">
+                <div data-aos="fade-left" data-aos-duration="1000" className="text-gray-200 px-5 lg:px-0 leading-relaxed text-[15.5px] md:text-[16px] space-y-6 my-auto" aria-label="About A.Y. Mohammed">
 
                     <p>
-                        Yemi Mohammed is a Nigerian writer known for his emotionally rich storytelling and sharp reflections on identity, belonging,
+                        A.Y. Mohammed is a Nigerian writer known for his emotionally rich storytelling and sharp reflections on identity, belonging,
                         and the everyday experiences that shape people. Growing up in Lagos, she discovered early the power of stories to preserve
                         memory and give voice to the unseen.
                     </p>

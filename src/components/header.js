@@ -54,7 +54,7 @@ export default function Header() {
                     <div className="flex items-center justify-between h-full">
                         <div className="flex items-center gap-6">
                             <div
-                                aria-label="Yemi Mohammed nameplate logo"
+                                aria-label="A.Y. Mohammed nameplate logo"
                                 className="select-none shrink-0"
                                 style={{ width: 220 }}
                             >
@@ -79,7 +79,7 @@ export default function Header() {
                                         strokeOpacity="0.10"
                                         paintOrder="stroke"
                                     >
-                                        Yemi
+                                        A.Y.
                                     </text>
 
                                     <text
@@ -180,7 +180,7 @@ export default function Header() {
                     <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
                         <div className="flex items-center gap-4">
                             <div
-                                aria-label="Yemi Mohammed nameplate logo"
+                                aria-label="A.Y. Mohammed nameplate logo"
                                 className="select-none shrink-0"
                                 style={{ width: 160 }}
                             >
@@ -205,7 +205,7 @@ export default function Header() {
                                         strokeOpacity="0.10"
                                         paintOrder="stroke"
                                     >
-                                        Yemi
+                                        A.Y.
                                     </text>
 
                                     <text

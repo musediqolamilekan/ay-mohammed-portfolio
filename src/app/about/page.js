@@ -5,27 +5,28 @@ export const metadata = {
 export default function AboutPage() {
     return (
         <section className="w-full py-20">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start overflow-hidden">
                 <div
                     className="w-full aspect-auto md:aspect-auto overflow-hidden rounded-md"
-                    aria-label="Portrait of Yemi Mohammed"
+                    aria-label="Portrait of A.Y. Mohammed"
                     data-aos="fade-right"
                     data-aos-duration="1000"
                 >
                     <img
                         src="/assets/aboutMe.jpg"
-                        alt="Yemi Mohammed portrait"
+                        alt="A.Y. Mohammed portrait"
                         className="w-full h-full object-cover"
                     />
                 </div>
+                
                 <div
                     className="text-gray-900 px-5 lg:px-0 leading-relaxed text-[15.5px] md:text-[16px] space-y-6 my-auto"
-                    aria-label="About Yemi Mohammed"
+                    aria-label="About A.Y. Mohammed"
                     data-aos="fade-left"
                     data-aos-duration="1000"
                 >
                     <p>
-                        Yemi Mohammed is a Nigerian writer whose work explores the quiet corners of everyday life.
+                        A.Y. Mohammed is a Nigerian writer whose work explores the quiet corners of everyday life.
                         His writing is shaped by memory, place, and the small moments that reveal larger truths.
                         Born and raised in Lagos, he learned early how stories hold family, history and community together.
                     </p>

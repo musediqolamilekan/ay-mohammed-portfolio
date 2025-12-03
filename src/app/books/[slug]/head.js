@@ -20,7 +20,7 @@ export async function generateMetadata({ params }) {
 
   const book = await serverClient.fetch(bookMetaQuery, { slug });
 
-  // Return just the book title; the layout template will add " – Yemi Mohammed"
+  // Return just the book title; the layout template will add " – A.Y. Mohammed"
   const title = book?.title ?? "Book";
   const description =
     book?.excerpt ?? (book?.description ? book.description.slice(0, 160) : "A.Y. Mohammed books");

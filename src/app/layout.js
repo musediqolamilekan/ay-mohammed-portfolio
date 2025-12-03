@@ -5,12 +5,12 @@ import Footer from "@/components/footer";
 
 export const metadata = {
   title: {
-    default: "Yemi Mohammed",
-    template: "%s – Yemi Mohammed",
+    default: "A.Y. Mohammed",
+    template: "%s – A.Y. Mohammed",
   },
   description: {
-    default: "Portfolio website of Yemi Mohammed, a Nigerian writer known for her emotionally rich storytelling and sharp reflections on identity, belonging, and everyday experiences.",
-    template: "%s – Portfolio of Yemi Mohammed",
+    default: "Portfolio website of A.Y. Mohammed, a Nigerian writer known for her emotionally rich storytelling and sharp reflections on identity, belonging, and everyday experiences.",
+    template: "%s – Portfolio of A.Y. Mohammed",
   },
 };
 
