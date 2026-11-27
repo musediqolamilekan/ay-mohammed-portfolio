@@ -2,8 +2,7 @@ import { NextResponse } from "next/server";
 import { serverClient } from "@/lib/sanityServer";
 
 function computeBookBatchMetrics(pageSize) {
-    // Controlled ASRE fault injection: defaults to 0 to trigger an unhandled exception
-    const batchDivisor = Number(process.env.BOOKS_BATCH_DIVISOR ?? 0);
+    const batchDivisor = Number(process.env.BOOKS_BATCH_DIVISOR ?? 1);
     if (!Number.isFinite(batchDivisor) || batchDivisor === 0) {
         throw new RangeError(
             `ZeroDivisionError: Division by zero computing book batch metrics (pageSize=${pageSize}, batchDivisor=${batchDivisor})`
@@ -15,8 +14,6 @@ function computeBookBatchMetrics(pageSize) {
 export async function GET(req) {
     const { searchParams } = new URL(req.url);
     const pageSize = parseInt(searchParams.get("pageSize") || "12", 10);
-
-    // Intentionally called outside try/catch so it surfaces as an unhandled HTTP 500 error
     computeBookBatchMetrics(pageSize);
 
     try {
